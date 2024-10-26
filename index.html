@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Programación</title>
+    <link rel="stylesheet" href="./Css/Css.css">
+    <script src="./Js/vue3.js"></script>
+</head>
+<body>
+    <div id="componente" class="container">
+        <h1>Encuesta de Programación</h1>
+        
+        <div class="section">
+            <p>¿Te gusta programar?</p>
+            <label><input type="radio" v-model="gustaProgramar" value="Sí"> Sí</label>
+            <label><input type="radio" v-model="gustaProgramar" value="No"> No</label>
+        </div>
+
+        <!-- Si responde 'Sí', mostramos el resto de las preguntas -->
+        <div v-if="gustaProgramar === 'Sí'">
+            <div class="section">
+                <p>¿Cuántos años llevas programando?</p>
+                <input type="number" v-model="aniosProgramando" min="0">
+            </div>
+
+            <div class="section">
+                <p><strong>Cuéntanos tu experiencia programando:</strong></p>
+                <textarea v-model="experiencia" placeholder="Describe tu experiencia..."></textarea>
+            </div>
+
+            <div class="section">
+                <p>¿Cuántos lenguajes de programación conoces? <br> Ingrese los lenguajes uno por uno</p>
+                <input type="text" v-model="nuevoLenguaje" placeholder="Lenguaje">
+                <button @click="agregarLenguaje">Agregar</button>
+                <ul>
+                    <li v-for="lenguaje in lenguajes">{{ lenguaje }}</li>
+                </ul>
+            </div>
+
+            <button class="resultados-btn" @click="mostrarResultados">Mostrar resultados</button>
+
+            <div v-if="mostrarResultado" class="resultados">
+                <h2>Resultados de la Encuesta:</h2>
+                <p><strong>¿Te gusta programar?:</strong> {{ gustaProgramar }}</p>
+                <p><strong>Años programando:</strong> {{ aniosProgramando }}</p>
+                <p><strong>Experiencia:</strong> {{ experiencia }}</p>
+                <p><strong>Lenguajes de programación:</strong></p>
+                <ul>
+                    <li v-for="lenguaje in lenguajes">{{ lenguaje }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Si responde 'No', mostramos un mensaje de agradecimiento -->
+        <div v-if="gustaProgramar === 'No'" class="section">
+            <p>Gracias por tu participación.</p>
+        </div>
+    </div>
+    <script src="./Js/script.js"></script>
+</body>
+</html>
